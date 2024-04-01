@@ -24,12 +24,17 @@ repositories {
     mavenCentral()
 }
 
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
 dependencies {
     testImplementation(
             'org.junit.jupiter:junit-jupiter:5.10.2',
             'com.codeborne:selenide:6.19.0',
             'org.slf4j:slf4j-simple:2.0.12',
-            'io.qameta.allure:allure-selenide:2.25.0'
+            'io.qameta.allure:allure-selenide:2.25.0',
+            'org.assertj:assertj-core:3.25.3'
     )
 }
 
