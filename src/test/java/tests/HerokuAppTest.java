@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 
@@ -140,10 +141,9 @@ public class HerokuAppTest {
             assertThat(steps.getRemainingDeleteButtonsCount())
                     .as("Неправильное количество кнопок после добавления")
                     .isEqualTo(1);
-            steps.removeElements(3);
-            assertThat(steps.getRemainingDeleteButtonsCount())
-                    .as("Неправильное количество кнопок после удаления")
-                    .isEqualTo(0);
+            assertThrows(Exception.class, () -> {
+                steps.removeElements(3);
+            }, "Невозможно удалить кнопки: недостаточно кнопок для удаления");
         }));
 
         return dynamicTests;
