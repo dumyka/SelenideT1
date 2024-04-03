@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -56,7 +57,7 @@ public class HerokuAppTest {
 
     @TestFactory
     public List<DynamicTest> InputsTest() {
-        List<String> inputValues = Arrays.asList("111", "222", "333", "777" , "dada", "666", "455"," 123", "456 ", "abc", "!@#");
+        List<String> inputValues = Arrays.asList("111", "222", "333", "777", "dada", "666", "455", " 123", "456 ", "abc", "!@#");
 
         List<DynamicTest> dynamicTests = new ArrayList<>();
         InputsSteps steps = new InputsSteps();
@@ -77,7 +78,6 @@ public class HerokuAppTest {
 
         return dynamicTests;
     }
-
 
 
     @ParameterizedTest
@@ -160,6 +160,38 @@ public class HerokuAppTest {
             steps.getStatusCodeText();
             steps.navigateToStatusCodePage();
         }
+    }
+
+    @Test
+    public void drugAndDropTest() {
+        DragAndDropSteps steps = new DragAndDropSteps();
+        steps.navigateToDragAndDropPage();
+        steps.dragAndDropElement();
+        steps.verifyElementsSwapped();
+    }
+
+    @Test
+    public void contextMenuTest() {
+        ContextMenuSteps steps = new ContextMenuSteps();
+        steps.navigateToContextMenuPage();
+        steps.rightClickZoneAndVerifyAlertText();
+    }
+
+    @Test
+    public void infinityScrollTest(){
+        InfinityScrollSteps steps = new InfinityScrollSteps();
+        steps.navigateToInfinityScrollPage();
+        steps.scrollToText("eius");
+        steps.verifyTextIsVisible("eius");
+        sleep(5000);
+
+    }
+
+    @Test
+    public void keyPressesTest(){
+        KeyPressesSteps steps = new KeyPressesSteps();
+        steps.navigateToKeyPressesPage();
+        steps.inputValueClickAndCheckText();
     }
 }
 
