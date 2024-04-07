@@ -14,6 +14,6 @@ public class DisappearingElementsSteps {
 
     @Step("Проверка наличия 5 элементов на странице")
     public void checkElementsCount(int expectedCount) {
-        Assertions.assertThat($$("ul>li").size()).isEqualTo(expectedCount);
+        Assertions.assertThat($$("ul>li")).hasSize(expectedCount);
     }
 }

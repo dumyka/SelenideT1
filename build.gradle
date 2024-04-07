@@ -38,6 +38,17 @@ dependencies {
     )
 }
 
+//test {
+//    useJUnitPlatform()
+//}
+
 test {
+    systemProperties(System.getProperties())
     useJUnitPlatform()
+}
+
+task smokeTest(type: Test) {
+    useJUnitPlatform {
+        includeTags 'Smoke'
+    }
 }

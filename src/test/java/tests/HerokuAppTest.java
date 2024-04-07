@@ -1,5 +1,6 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.*;
@@ -15,12 +16,14 @@ import java.util.List;
 import static com.codeborne.selenide.Selenide.open;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 
 public class HerokuAppTest {
     @BeforeEach
     void setUp() {
+        Configuration.remote = System.getProperty("remoteUrl", "http://192.168.0.106:4444/wd/hub");
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("version", "120.0");
         open("https://the-internet.herokuapp.com/");
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
@@ -37,6 +40,7 @@ public class HerokuAppTest {
     }
 
     @Test
+    @Tag("Smoke")
     public void DropdownTest() {
         DropdownSteps dropdownSteps = new DropdownSteps();
         dropdownSteps.navigateToDropdownPage();
@@ -96,9 +100,8 @@ public class HerokuAppTest {
         String message = notificationMessageSteps.getMessageText();
 
         // Проверяем, содержит ли сообщение текст 'Action successful', если нет - тест проваливается
-        if (!message.contains("Action successful")) {
-            fail("Уведомление не содержит статус 'Action successful'");
-        }
+        assertThat(message).contains("Action successful")
+                .withFailMessage("Уведомление не содержит статус 'Action successful'");
     }
 
     @TestFactory
