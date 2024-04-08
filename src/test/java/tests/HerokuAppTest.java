@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class HerokuAppTest {
     @BeforeEach
     void setUp() {
-        Configuration.remote = System.getProperty("remoteUrl", "http://192.168.0.106:4444/wd/hub");
+        Configuration.remote = System.getProperty("remoteUrl", "http://51.250.71.242:4444/wd/hub");
         Configuration.browser = System.getProperty("browser", "chrome");
         Configuration.browserVersion = System.getProperty("version", "120.0");
         open("https://the-internet.herokuapp.com/");
